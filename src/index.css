@@ -87,6 +87,69 @@
   animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* GTA VI Leonida Radar Map Styles */
+.gta-radar-map {
+  background-color: #0c1017 !important;
+}
+
+/* Dark mode tiles filter for GTA VI vector radar aesthetic */
+html.dark .gta-radar-map .leaflet-tile-pane {
+  filter: invert(100%) hue-rotate(185deg) brightness(88%) contrast(135%) saturate(85%);
+}
+
+/* Light mode tiles filter for crisp cartographic clarity */
+html:not(.dark) .gta-radar-map .leaflet-tile-pane {
+  filter: saturate(115%) contrast(108%) brightness(98%);
+}
+
+/* Pulse animation for radar blips */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.9; }
+  50% { transform: scale(1.45); opacity: 0.15; }
+  100% { transform: scale(0.95); opacity: 0.9; }
+}
+
+.radar-pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* District Rockstar typography label */
+.district-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  text-shadow: 0 0 5px #000000, 0 1px 3px rgba(0,0,0,0.95), 0 0 10px rgba(255, 90, 54, 0.4);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+html:not(.dark) .district-label {
+  color: #111115;
+  text-shadow: 0 0 4px #FFFFFF, 0 1px 2px rgba(255,255,255,0.95);
+}
+
+/* Leaflet Popup Rockstar Dark Styling */
+.leaflet-popup-content-wrapper {
+  background: var(--surface-main) !important;
+  color: var(--text-main) !important;
+  border-radius: 4px !important;
+  border: 1px solid var(--border-main) !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4) !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 10px !important;
+  line-height: 1.4 !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--surface-main) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

@@ -1,16 +1,25 @@
 import React, { useState, useMemo } from 'react';
-import { Search, X, Clock, MapPin, Plus, Check, ArrowUpRight, Filter, Sparkles } from 'lucide-react';
-import { PLACES, CATEGORIES } from '../data/valdemoroData';
+import { Search, X, Clock, MapPin, Plus, Check, ArrowUpRight, Filter, Sparkles, Star } from 'lucide-react';
+import { PLACES, CATEGORIES, TRAVEL_PROFILES, getFallbackImage } from '../data/valdemoroData';
 
-export default function CatalogoPatrimonio({ onSelectPlace, onToggleRoute, isPlaceInRoute }) {
+export default function CatalogoPatrimonio({ 
+  onSelectPlace, 
+  onToggleRoute, 
+  isPlaceInRoute,
+  travelProfile 
+}) {
   const [selectedCategory, setSelectedCategory] = useState('todos');
   const [searchQuery, setSearchQuery] = useState('');
   const [durationFilter, setDurationFilter] = useState('todas');
   const [onlyFree, setOnlyFree] = useState(false);
 
-  // Instant reactive filter
+  const activeProfile = useMemo(() => {
+    return TRAVEL_PROFILES.find(p => p.id === travelProfile);
+  }, [travelProfile]);
+
+  // Instant reactive filter with travel profile priority reordering
   const filteredPlaces = useMemo(() => {
-    return PLACES.filter(place => {
+    const list = PLACES.filter(place => {
       const matchesCategory = selectedCategory === 'todos' || place.category === selectedCategory;
       
       const matchesFree = !onlyFree || place.entry.toLowerCase().includes('gratuita') || place.entry.toLowerCase().includes('libre');
@@ -36,7 +45,18 @@ export default function CatalogoPatrimonio({ onSelectPlace, onToggleRoute, isPla
 
       return matchesCategory && matchesFree && matchesDuration && matchesText;
     });
-  }, [selectedCategory, searchQuery, durationFilter, onlyFree]);
+
+    // If a travel profile is active, sort recommended places first
+    if (activeProfile) {
+      return [...list].sort((a, b) => {
+        const aRec = activeProfile.recommendedIds.includes(a.id) ? 1 : 0;
+        const bRec = activeProfile.recommendedIds.includes(b.id) ? 1 : 0;
+        return bRec - aRec;
+      });
+    }
+
+    return list;
+  }, [selectedCategory, searchQuery, durationFilter, onlyFree, activeProfile]);
 
   const handleResetFilters = () => {
     setSelectedCategory('todos');
@@ -59,8 +79,15 @@ export default function CatalogoPatrimonio({ onSelectPlace, onToggleRoute, isPla
             Catálogo del Destino
           </h2>
           <p className="font-body text-base sm:text-lg text-[var(--text-muted)] leading-relaxed">
-            Explora la riqueza monumental, los tesoros pictóricos del barroco castellano, las grandes zonas verdes y las celebraciones históricas de Valdemoro.
+            Explora los 15 hitos contrastados de Valdemoro con coordenadas GPS exactas, fotografías reales y tiempos de visita.
           </p>
+
+          {activeProfile && (
+            <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-[var(--accent-gold)]/15 border border-[var(--accent-gold)]/40 text-[var(--text-main)] text-xs">
+              <Star className="w-4 h-4 text-[var(--accent-gold)] fill-[var(--accent-gold)]" />
+              <span>Priorizando recomendaciones para: <strong className="font-bold text-[var(--accent-gold)]">{activeProfile.label}</strong></span>
+            </div>
+          )}
         </div>
 
         {/* Filter Toolbar: Search Bar + Category Pills */}
@@ -73,7 +100,7 @@ export default function CatalogoPatrimonio({ onSelectPlace, onToggleRoute, isPla
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar por monumento, Goya, naturaleza, fiestas..."
+              placeholder="Buscar por monumento, Goya, basket, burgers, parques..."
               className="w-full pl-12 pr-10 py-3.5 bg-[var(--surface-subtle)] border border-[var(--border-strong)] rounded-sm text-sm text-[var(--text-main)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-main)] focus:ring-1 focus:ring-[var(--accent-main)] transition-colors min-h-[46px]"
               aria-label="Buscar en el catálogo de patrimonio y cultura"
             />
@@ -170,10 +197,14 @@ export default function CatalogoPatrimonio({ onSelectPlace, onToggleRoute, isPla
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPlaces.map((place) => {
               const inRoute = isPlaceInRoute(place.id);
+              const isRecommended = activeProfile?.recommendedIds.includes(place.id);
+
               return (
                 <article
                   key={place.id}
-                  className="bg-[var(--surface-card)] border border-[var(--border-main)] rounded-sm overflow-hidden flex flex-col justify-between hover:border-[var(--accent-main)] transition-all duration-300 group shadow-sm hover:shadow-md"
+                  className={`bg-[var(--surface-card)] border rounded-sm overflow-hidden flex flex-col justify-between hover:border-[var(--accent-main)] transition-all duration-300 group shadow-sm hover:shadow-md ${
+                    isRecommended ? 'border-[var(--accent-gold)]/70 ring-1 ring-[var(--accent-gold)]/40' : 'border-[var(--border-main)]'
+                  }`}
                 >
                   {/* Image and Badges */}
                   <div className="relative aspect-[16/10] overflow-hidden bg-[var(--surface-subtle)]">
@@ -184,7 +215,10 @@ export default function CatalogoPatrimonio({ onSelectPlace, onToggleRoute, isPla
                       width="600"
                       height="375"
                       loading="lazy"
-                      onError={(e) => { e.target.src = 'https://placehold.co/600x375?text=Valdemoro'; e.target.onerror = null; }}
+                      onError={(e) => { 
+                        e.currentTarget.src = getFallbackImage(place.title); 
+                        e.currentTarget.onerror = null; 
+                      }}
                     />
                     <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                       <span className="px-2.5 py-1 rounded-xs bg-black/80 backdrop-blur-sm text-white text-[11px] font-bold uppercase">
@@ -193,6 +227,12 @@ export default function CatalogoPatrimonio({ onSelectPlace, onToggleRoute, isPla
                       {place.tags.includes('BIC') && (
                         <span className="px-2.5 py-1 rounded-xs bg-[var(--accent-gold)] text-black text-[11px] font-extrabold uppercase">
                           BIC
+                        </span>
+                      )}
+                      {isRecommended && (
+                        <span className="px-2.5 py-1 rounded-xs bg-emerald-600 text-white text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                          <Star className="w-3 h-3 fill-white" />
+                          <span>Recomendado</span>
                         </span>
                       )}
                     </div>
@@ -223,7 +263,7 @@ export default function CatalogoPatrimonio({ onSelectPlace, onToggleRoute, isPla
                             key={idx}
                             className="text-[10px] px-2 py-0.5 rounded-xs bg-[var(--badge-bg)] text-[var(--text-muted)] font-medium"
                           >
-                            {tag}
+                            #{tag}
                           </span>
                         ))}
                       </div>

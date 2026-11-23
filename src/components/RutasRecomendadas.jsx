@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sparkles, Clock, Check, ArrowRight, Compass, Shield, Users, MapPin } from 'lucide-react';
-import { PLACES } from '../data/valdemoroData';
+import { PLACES, getFallbackImage } from '../data/valdemoroData';
 
 export default function RutasRecomendadas({ onLoadCustomPreset, onNavigateToPlanner }) {
   const PRESET_ROUTES = [
@@ -26,7 +26,7 @@ export default function RutasRecomendadas({ onLoadCustomPreset, onNavigateToPlan
       target: 'Familias con niños y mascotas',
       image: '/images/valdemoro/bolitas-del-airon.jpg',
       description: 'Un recorrido pensado para desconectar: 44 hectáreas en Bolitas del Airón con arroyos y merenderos, seguido del lago con aves del parque Tierno Galván.',
-      placeIds: ['bolitas-del-airon', 'tierno-galvan', 'fuente-de-la-villa']
+      placeIds: ['bolitas-del-airon', 'parque-tierno-galvan', 'fuente-de-la-villa']
     },
     {
       id: 'completa',
@@ -83,7 +83,10 @@ export default function RutasRecomendadas({ onLoadCustomPreset, onNavigateToPlan
                   width="600"
                   height="375"
                   loading="lazy"
-                  onError={(e) => { e.target.src = 'https://placehold.co/600x375?text=Ruta+Valdemoro'; e.target.onerror = null; }}
+                  onError={(e) => { 
+                    e.currentTarget.src = getFallbackImage(route.title); 
+                    e.currentTarget.onerror = null; 
+                  }}
                 />
                 <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                   <span className="px-2.5 py-1 rounded-xs bg-[var(--accent-main)] text-white text-[11px] font-bold uppercase">

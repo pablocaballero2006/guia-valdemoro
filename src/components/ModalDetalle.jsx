@@ -1,7 +1,22 @@
-import React, { useEffect } from 'react';
-import { X, Clock, MapPin, Plus, Check, ExternalLink, ShieldCheck, HeartHandshake, Eye, Bookmark } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { 
+  X, 
+  Clock, 
+  MapPin, 
+  Plus, 
+  Check, 
+  ExternalLink, 
+  ShieldCheck, 
+  Sparkles, 
+  BookOpen,
+  Info,
+  Layers
+} from 'lucide-react';
+import { getFallbackImage } from '../data/valdemoroData';
 
 export default function ModalDetalle({ place, onClose, onToggleRoute, isPlaceInRoute }) {
+  const [activeTab, setActiveTab] = useState('historia'); // 'historia' | 'curiosidad'
+
   // Close modal when Escape key is pressed (R-32)
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -16,7 +31,7 @@ export default function ModalDetalle({ place, onClose, onToggleRoute, isPlaceInR
   if (!place) return null;
 
   const inRoute = isPlaceInRoute(place.id);
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.mapsQuery || (place.title + ', Valdemoro, Madrid'))}`;
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.coords || place.mapsQuery || (place.title + ', Valdemoro, Madrid'))}`;
 
   return (
     <div 
@@ -43,7 +58,10 @@ export default function ModalDetalle({ place, onClose, onToggleRoute, isPlaceInR
             className="w-full h-full object-cover"
             width="1000"
             height="562"
-            onError={(e) => { e.target.src = 'https://placehold.co/1000x562?text=Valdemoro+Patrimonio'; e.target.onerror = null; }}
+            onError={(e) => { 
+              e.currentTarget.src = getFallbackImage(place.title); 
+              e.currentTarget.onerror = null; 
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-main)] via-transparent to-black/60" />
 
@@ -102,26 +120,72 @@ export default function ModalDetalle({ place, onClose, onToggleRoute, isPlaceInR
             </p>
           </div>
 
-          {/* Contrast-Verified Historical Details */}
-          {place.historyDetails && place.historyDetails.length > 0 && (
-            <div className="bg-[var(--surface-subtle)] border border-[var(--border-main)] rounded-sm p-5">
+          {/* Tab Selector: Historia vs Curiosidad Local */}
+          <div className="flex rounded-xs bg-[var(--surface-subtle)] p-1 border border-[var(--border-main)] gap-1">
+            <button
+              onClick={() => setActiveTab('historia')}
+              className={`flex-1 py-2.5 px-3 text-xs font-bold uppercase tracking-wider rounded-xs transition-all flex items-center justify-center gap-2 min-h-[44px] ${
+                activeTab === 'historia'
+                  ? 'bg-[var(--accent-main)] text-white shadow-sm'
+                  : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
+              }`}
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>Historia Documentada</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('curiosidad')}
+              className={`flex-1 py-2.5 px-3 text-xs font-bold uppercase tracking-wider rounded-xs transition-all flex items-center justify-center gap-2 min-h-[44px] ${
+                activeTab === 'curiosidad'
+                  ? 'bg-[var(--accent-gold)] text-black shadow-sm'
+                  : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
+              }`}
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Curiosidad Local</span>
+            </button>
+          </div>
+
+          {/* Tab 1: Historia Documentada */}
+          {activeTab === 'historia' && (
+            <div className="bg-[var(--surface-subtle)] border border-[var(--border-main)] rounded-sm p-5 animate-fade-in">
               <h3 className="font-editorial font-bold text-lg text-[var(--text-main)] uppercase tracking-wide mb-3 flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-[var(--accent-main)]" />
                 <span>Hitos históricos y artísticos contrastados</span>
               </h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-[var(--text-muted)] font-body leading-relaxed list-disc list-inside">
-                {place.historyDetails.map((detail, idx) => (
-                  <li key={idx} className="pl-1">
-                    {detail}
-                  </li>
-                ))}
-              </ul>
+              {place.historyDetails && place.historyDetails.length > 0 ? (
+                <ul className="space-y-2 text-xs sm:text-sm text-[var(--text-muted)] font-body leading-relaxed list-disc list-inside">
+                  {place.historyDetails.map((detail, idx) => (
+                    <li key={idx} className="pl-1">
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-xs sm:text-sm text-[var(--text-muted)] font-body">
+                  Punto de interés de Valdemoro catalogado en el inventario municipal de patrimonio y espacios públicos.
+                </p>
+              )}
               {place.officialSource && (
                 <div className="mt-4 pt-3 border-t border-[var(--border-strong)] text-[11px] text-[var(--text-subtle)] flex items-center gap-1.5 font-medium">
                   <span>Fuente documental oficial:</span>
                   <strong className="text-[var(--text-main)]">{place.officialSource}</strong>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* Tab 2: Curiosidad Local */}
+          {activeTab === 'curiosidad' && (
+            <div className="bg-[var(--surface-subtle)] border-l-4 border-l-[var(--accent-gold)] border border-[var(--border-main)] rounded-sm p-5 animate-fade-in">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--accent-gold)] mb-2">
+                <Sparkles className="w-4 h-4" />
+                <span>¿Sabías esto de Valdemoro?</span>
+              </div>
+              <p className="text-sm sm:text-base text-[var(--text-main)] font-body leading-relaxed">
+                {place.curiosidadLocal || 'Enclave con arraigo en la identidad y tradición valdemoreña, visitado tanto por vecinos como por viajeros de la Comunidad de Madrid.'}
+              </p>
             </div>
           )}
 
@@ -134,7 +198,10 @@ export default function ModalDetalle({ place, onClose, onToggleRoute, isPlaceInR
                 className="w-36 h-48 object-cover rounded-xs border border-[var(--accent-gold)]/50 shrink-0"
                 width="144"
                 height="192"
-                onError={(e) => { e.target.src = 'https://placehold.co/144x192?text=Goya+Valdemoro'; e.target.onerror = null; }}
+                onError={(e) => { 
+                  e.currentTarget.src = getFallbackImage('Lienzo de Goya'); 
+                  e.currentTarget.onerror = null; 
+                }}
               />
               <div className="text-xs">
                 <span className="text-[11px] uppercase tracking-wider font-bold text-[var(--accent-gold)] block mb-1">
@@ -147,13 +214,13 @@ export default function ModalDetalle({ place, onClose, onToggleRoute, isPlaceInR
                   Óleo sobre lienzo pintado por Francisco de Goya (1786-1787) para el retablo mayor de la Asunción de Valdemoro. Encargado y financiado por el conde de Lerena.
                 </p>
                 <span className="text-[10px] text-neutral-400 block">
-                  Ubicación: Retablo mayor (calle lateral derecha). Fotografía de dominio público (Wikimedia Commons).
+                  Ubicación: Retablo mayor (calle lateral derecha). Fotografía de dominio público.
                 </span>
               </div>
             </div>
           )}
 
-          {/* Secondary Landmark Photo (Torre del Reloj) */}
+          {/* Secondary Landmark Photo */}
           {place.secondaryImage && (
             <div className="border border-[var(--border-main)] rounded-sm p-4 bg-[var(--surface-subtle)] flex flex-col sm:flex-row gap-4 items-center">
               <img
@@ -162,7 +229,10 @@ export default function ModalDetalle({ place, onClose, onToggleRoute, isPlaceInR
                 className="w-36 h-40 object-cover rounded-xs border border-[var(--border-main)] shrink-0"
                 width="144"
                 height="160"
-                onError={(e) => { e.target.src = 'https://placehold.co/144x160?text=Torre+del+Reloj'; e.target.onerror = null; }}
+                onError={(e) => { 
+                  e.currentTarget.src = getFallbackImage(place.secondaryImageTitle || place.title); 
+                  e.currentTarget.onerror = null; 
+                }}
               />
               <div className="text-xs">
                 <span className="text-[11px] uppercase tracking-wider font-bold text-[var(--accent-main)] block mb-1">
@@ -174,9 +244,6 @@ export default function ModalDetalle({ place, onClose, onToggleRoute, isPlaceInR
                 <p className="text-[var(--text-muted)] mb-2 leading-relaxed">
                   {place.secondaryImageDesc}
                 </p>
-                <span className="text-[10px] text-neutral-400 block">
-                  Fotografía de dominio público contrastada (Wikimedia Commons).
-                </span>
               </div>
             </div>
           )}

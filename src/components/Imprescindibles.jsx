@@ -1,8 +1,17 @@
-import React from 'react';
-import { ArrowUpRight, Clock, Plus, Check, Award, MapPin } from 'lucide-react';
-import { PLACES } from '../data/valdemoroData';
+import React, { useMemo } from 'react';
+import { ArrowUpRight, Clock, Plus, Check, Award, MapPin, Star } from 'lucide-react';
+import { PLACES, TRAVEL_PROFILES, getFallbackImage } from '../data/valdemoroData';
 
-export default function Imprescindibles({ onSelectPlace, onToggleRoute, isPlaceInRoute }) {
+export default function Imprescindibles({ 
+  onSelectPlace, 
+  onToggleRoute, 
+  isPlaceInRoute,
+  travelProfile 
+}) {
+  const activeProfile = useMemo(() => {
+    return TRAVEL_PROFILES.find(p => p.id === travelProfile);
+  }, [travelProfile]);
+
   // Curated key places for the editorial home magazine layout
   const heroPlace = PLACES.find(p => p.id === 'iglesia-asuncion');
   const secondaryPlaces = PLACES.filter(p => ['plaza-constitucion', 'convento-santa-clara', 'bolitas-del-airon'].includes(p.id));
@@ -40,7 +49,10 @@ export default function Imprescindibles({ onSelectPlace, onToggleRoute, isPlaceI
                   width="1200"
                   height="750"
                   loading="lazy"
-                  onError={(e) => { e.target.src = 'https://placehold.co/1200x750?text=Valdemoro+Patrimonio'; e.target.onerror = null; }}
+                  onError={(e) => { 
+                    e.currentTarget.src = getFallbackImage(heroPlace.title); 
+                    e.currentTarget.onerror = null; 
+                  }}
                 />
                 <div className="absolute top-4 left-4 flex flex-wrap gap-2">
                   <span className="px-3 py-1 rounded-xs bg-[var(--accent-main)] text-white text-xs font-bold uppercase tracking-wider">
@@ -49,6 +61,12 @@ export default function Imprescindibles({ onSelectPlace, onToggleRoute, isPlaceI
                   <span className="px-3 py-1 rounded-xs bg-black/75 backdrop-blur-sm text-[var(--accent-gold)] text-xs font-bold uppercase">
                     Monumento BIC
                   </span>
+                  {activeProfile?.recommendedIds.includes(heroPlace.id) && (
+                    <span className="px-3 py-1 rounded-xs bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                      <Star className="w-3 h-3 fill-white" />
+                      <span>Recomendado</span>
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -111,10 +129,14 @@ export default function Imprescindibles({ onSelectPlace, onToggleRoute, isPlaceI
           <div className="lg:col-span-5 flex flex-col gap-6">
             {secondaryPlaces.map((place) => {
               const inRoute = isPlaceInRoute(place.id);
+              const isRecommended = activeProfile?.recommendedIds.includes(place.id);
+
               return (
                 <article 
                   key={place.id}
-                  className="bg-[var(--surface-card)] border border-[var(--border-main)] rounded-sm p-5 hover:border-[var(--accent-main)] transition-all duration-300 flex flex-col sm:flex-row gap-5 group"
+                  className={`bg-[var(--surface-card)] border rounded-sm p-5 hover:border-[var(--accent-main)] transition-all duration-300 flex flex-col sm:flex-row gap-5 group ${
+                    isRecommended ? 'border-[var(--accent-gold)]/60' : 'border-[var(--border-main)]'
+                  }`}
                 >
                   <div className="w-full sm:w-36 h-36 shrink-0 relative overflow-hidden rounded-xs">
                     <img 
@@ -124,11 +146,19 @@ export default function Imprescindibles({ onSelectPlace, onToggleRoute, isPlaceI
                       width="300"
                       height="300"
                       loading="lazy"
-                      onError={(e) => { e.target.src = 'https://placehold.co/300x300?text=Valdemoro'; e.target.onerror = null; }}
+                      onError={(e) => { 
+                        e.currentTarget.src = getFallbackImage(place.title); 
+                        e.currentTarget.onerror = null; 
+                      }}
                     />
                     <span className="absolute bottom-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded-xs bg-black/80 text-white uppercase">
                       {place.categoryLabel}
                     </span>
+                    {isRecommended && (
+                      <span className="absolute top-2 left-2 text-[9px] font-bold px-1.5 py-0.5 rounded-xs bg-emerald-600 text-white uppercase flex items-center gap-0.5">
+                        <Star className="w-2.5 h-2.5 fill-white" />
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex flex-col justify-between flex-grow">

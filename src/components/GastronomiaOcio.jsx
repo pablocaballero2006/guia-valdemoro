@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Utensils, Award, MapPin, Sparkles, Wine, Coffee, Compass, ExternalLink } from 'lucide-react';
-import { GASTRONOMY_EXPERIENCES } from '../data/valdemoroData';
+import { GASTRONOMY_EXPERIENCES, getFallbackImage } from '../data/valdemoroData';
 
 export default function GastronomiaOcio() {
   const [selectedFilter, setSelectedFilter] = useState('todos');
@@ -70,7 +70,10 @@ export default function GastronomiaOcio() {
                   width="800"
                   height="600"
                   loading="lazy"
-                  onError={(e) => { e.target.src = 'https://placehold.co/800x600?text=Restaurante+Chiron'; e.target.onerror = null; }}
+                  onError={(e) => { 
+                    e.currentTarget.src = getFallbackImage('Restaurante Chiron'); 
+                    e.currentTarget.onerror = null; 
+                  }}
                 />
                 <div className="absolute top-4 left-4 flex flex-col gap-1">
                   <span className="px-3 py-1 rounded-xs bg-[var(--accent-gold)] text-black text-xs font-extrabold uppercase tracking-wider flex items-center gap-1 shadow-md">
@@ -149,7 +152,10 @@ export default function GastronomiaOcio() {
                     width="600"
                     height="338"
                     loading="lazy"
-                    onError={(e) => { e.target.src = 'https://placehold.co/600x338?text=Gastronomia+Valdemoro'; e.target.onerror = null; }}
+                    onError={(e) => { 
+                      e.currentTarget.src = getFallbackImage(item.title); 
+                      e.currentTarget.onerror = null; 
+                    }}
                   />
                   <div className="absolute top-3 left-3 flex items-center gap-2">
                     <span className="px-2.5 py-1 rounded-xs bg-black/80 text-white text-[10px] font-bold uppercase tracking-wider">

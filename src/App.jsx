@@ -6,21 +6,37 @@ import RutasRecomendadas from './components/RutasRecomendadas';
 import CatalogoPatrimonio from './components/CatalogoPatrimonio';
 import GastronomiaOcio from './components/GastronomiaOcio';
 import PlanificadorRuta from './components/PlanificadorRuta';
+import MapaRadar from './components/MapaRadar';
 import ModalDetalle from './components/ModalDetalle';
 import Footer from './components/Footer';
-import { PLACES } from './data/valdemoroData';
-import { ArrowRight, Compass, CalendarCheck } from 'lucide-react';
+import { PLACES, getFallbackImage } from './data/valdemoroData';
+import { ArrowRight, Compass, CalendarCheck, Navigation } from 'lucide-react';
 
 export default function App() {
-  // Theme state (Dark Mode by default per Rockstar / Cine aesthetic, with localStorage and prefers-color-scheme)
+  // Theme state (Dark Mode by default per Rockstar / Cine aesthetic)
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem('valdemoro_theme');
     if (saved) return saved === 'dark';
     return true; // Default to dark mode for cinema aesthetic
   });
 
-  // Current view state
+  // Current view state: 'inicio' | 'patrimonio' | 'mapa-radar' | 'gastronomia' | 'planificador'
   const [currentView, setCurrentView] = useState('inicio');
+
+  // Travel profile filter state
+  const [travelProfile, setTravelProfile] = useState(() => {
+    return localStorage.getItem('valdemoro_profile') || null;
+  });
+
+  // Visited places state for "En Ruta" mode
+  const [visitedPlaces, setVisitedPlaces] = useState(() => {
+    try {
+      const saved = localStorage.getItem('valdemoro_visited');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
 
   // Route places state with localStorage persistence
   const [routePlaces, setRoutePlaces] = useState(() => {
@@ -47,6 +63,20 @@ export default function App() {
     }
   }, [isDark]);
 
+  // Persist travelProfile
+  useEffect(() => {
+    if (travelProfile) {
+      localStorage.setItem('valdemoro_profile', travelProfile);
+    } else {
+      localStorage.removeItem('valdemoro_profile');
+    }
+  }, [travelProfile]);
+
+  // Persist visitedPlaces
+  useEffect(() => {
+    localStorage.setItem('valdemoro_visited', JSON.stringify(visitedPlaces));
+  }, [visitedPlaces]);
+
   // Persist routePlaces
   useEffect(() => {
     localStorage.setItem('valdemoro_route', JSON.stringify(routePlaces));
@@ -63,6 +93,16 @@ export default function App() {
         return prev.filter(p => p.id !== place.id);
       } else {
         return [...prev, place];
+      }
+    });
+  };
+
+  const handleToggleVisited = (placeId) => {
+    setVisitedPlaces(prev => {
+      if (prev.includes(placeId)) {
+        return prev.filter(id => id !== placeId);
+      } else {
+        return [...prev, placeId];
       }
     });
   };
@@ -86,6 +126,7 @@ export default function App() {
   const handleClearRoute = () => {
     if (window.confirm('¿Deseas vaciar todas las paradas de tu ruta personalizada?')) {
       setRoutePlaces([]);
+      setVisitedPlaces([]);
     }
   };
 
@@ -126,12 +167,19 @@ export default function App() {
                 setCurrentView('planificador');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
+              onNavigateToRadar={() => {
+                setCurrentView('mapa-radar');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              currentProfile={travelProfile}
+              onSelectProfile={setTravelProfile}
             />
 
             <Imprescindibles
               onSelectPlace={(place) => setSelectedPlace(place)}
               onToggleRoute={handleToggleRoute}
               isPlaceInRoute={isPlaceInRoute}
+              travelProfile={travelProfile}
             />
 
             <RutasRecomendadas
@@ -154,9 +202,9 @@ export default function App() {
                       Patrimonio, Tapas y Más de 40 Hectáreas de Aire Puro
                     </h2>
                     <p className="font-body text-sm sm:text-base text-[var(--text-muted)] leading-relaxed mb-6">
-                      Desde el lienzo original de Goya en la Asunción hasta una comida con estrella Michelin en Chirón o una caminata por los pinares del Cerro de la Mira, Valdemoro ofrece una jornada memorable a menos de media hora de Madrid.
+                      Desde el lienzo original de Goya en la Asunción hasta una comida con estrella Michelin en Chirón, el ascenso a Tercera FEB del CB Villa de Valdemoro en el Pabellón Jesús España o las smash burgers de La Osa, Valdemoro ofrece una jornada memorable a menos de media hora de Madrid.
                     </p>
-                    <div className="flex flex-wrap gap-4">
+                    <div className="flex flex-wrap gap-3">
                       <button
                         onClick={() => {
                           setCurrentView('patrimonio');
@@ -166,6 +214,17 @@ export default function App() {
                       >
                         <Compass className="w-4 h-4" />
                         <span>Ver catálogo completo</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setCurrentView('mapa-radar');
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        className="px-5 py-3 rounded-sm bg-black/70 hover:bg-black border border-[var(--accent-gold)] text-[var(--accent-gold)] font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-2 min-h-[44px]"
+                      >
+                        <Navigation className="w-4 h-4" />
+                        <span>Mapa Radar GTA VI</span>
                       </button>
 
                       <button
@@ -188,7 +247,10 @@ export default function App() {
                       width="800"
                       height="600"
                       loading="lazy"
-                      onError={(e) => { e.target.src = 'https://placehold.co/800x600?text=Plaza+de+la+Constitucion'; e.target.onerror = null; }}
+                      onError={(e) => { 
+                        e.currentTarget.src = getFallbackImage('Plaza de la Constitucion'); 
+                        e.currentTarget.onerror = null; 
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
                       <div>
@@ -214,27 +276,48 @@ export default function App() {
               onSelectPlace={(place) => setSelectedPlace(place)}
               onToggleRoute={handleToggleRoute}
               isPlaceInRoute={isPlaceInRoute}
+              travelProfile={travelProfile}
             />
           </div>
         )}
 
-        {/* VIEW 3: GASTRONOMÍA Y OCIO */}
+        {/* VIEW 3: MAPA RADAR ESTILO GTA VI */}
+        {currentView === 'mapa-radar' && (
+          <div className="animate-fade-in">
+            <MapaRadar
+              routePlaces={routePlaces}
+              onToggleRoute={handleToggleRoute}
+              isPlaceInRoute={isPlaceInRoute}
+              onSelectPlace={(place) => setSelectedPlace(place)}
+              onLoadCustomPreset={(places) => setRoutePlaces(places)}
+              onClearRoute={handleClearRoute}
+            />
+          </div>
+        )}
+
+        {/* VIEW 4: GASTRONOMÍA Y OCIO */}
         {currentView === 'gastronomia' && (
           <div className="animate-fade-in">
             <GastronomiaOcio />
           </div>
         )}
 
-        {/* VIEW 4: PLANIFICA TU VISITA */}
+        {/* VIEW 5: PLANIFICA TU VISITA */}
         {currentView === 'planificador' && (
           <div className="animate-fade-in">
             <PlanificadorRuta
               routePlaces={routePlaces}
+              visitedPlaces={visitedPlaces}
+              onToggleVisited={handleToggleVisited}
               onRemoveFromRoute={handleRemoveFromRoute}
               onMovePlace={handleMovePlace}
               onClearRoute={handleClearRoute}
               onLoadPresetRoute={handleLoadPresetRoute}
               onSelectPlace={(place) => setSelectedPlace(place)}
+              onNavigateToRadar={() => {
+                setCurrentView('mapa-radar');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             />
           </div>
         )}

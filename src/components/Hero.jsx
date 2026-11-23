@@ -1,8 +1,32 @@
 import React from 'react';
-import { ArrowRight, Compass, CalendarCheck, ShieldCheck, Clock, MapPin, Sparkles } from 'lucide-react';
-import { PRACTICAL_INFO } from '../data/valdemoroData';
+import { 
+  ArrowRight, 
+  Compass, 
+  CalendarCheck, 
+  Sparkles, 
+  Navigation, 
+  Landmark, 
+  Users, 
+  Flame, 
+  Trophy,
+  Check
+} from 'lucide-react';
+import { PRACTICAL_INFO, TRAVEL_PROFILES, getFallbackImage } from '../data/valdemoroData';
 
-export default function Hero({ onExploreClick, onPlanRouteClick }) {
+const PROFILE_ICONS = {
+  Landmark: Landmark,
+  Users: Users,
+  Flame: Flame,
+  Trophy: Trophy
+};
+
+export default function Hero({ 
+  onExploreClick, 
+  onPlanRouteClick, 
+  onNavigateToRadar,
+  currentProfile, 
+  onSelectProfile 
+}) {
   return (
     <section 
       className="relative min-h-[92vh] flex items-center justify-center overflow-hidden pt-24 pb-12 sm:pb-16"
@@ -17,7 +41,10 @@ export default function Hero({ onExploreClick, onPlanRouteClick }) {
           width="2000"
           height="1200"
           fetchPriority="high"
-          onError={(e) => { e.target.src = 'https://placehold.co/2000x1200?text=Valdemoro+Madrid'; e.target.onerror = null; }}
+          onError={(e) => { 
+            e.currentTarget.src = getFallbackImage('Valdemoro Madrid'); 
+            e.currentTarget.onerror = null; 
+          }}
         />
         {/* Dual Mode Overlay */}
         <div 
@@ -56,24 +83,78 @@ export default function Hero({ onExploreClick, onPlanRouteClick }) {
             Historia, arte goyesco y naturaleza al sur de Madrid. Descubre el legado del barroco castellano, la huella insigne de Francisco de Goya y más de 40 hectáreas de paraje natural a 25 minutos de Sol.
           </p>
 
-          {/* Actions: Primary CTA and Route Planner Link */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-14">
+          {/* Actions: Primary CTA, Radar Map & Route Planner */}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-10">
             <button
               onClick={onExploreClick}
-              className="px-6 py-4 rounded-sm bg-[var(--accent-main)] hover:bg-[var(--accent-hover)] text-white font-bold text-base tracking-wide uppercase transition-all duration-200 shadow-lg hover:shadow-xl hover:translate-y-[-2px] active:translate-y-[1px] flex items-center justify-center gap-3 min-h-[48px]"
+              className="px-6 py-4 rounded-sm bg-[var(--accent-main)] hover:bg-[var(--accent-hover)] text-white font-bold text-sm sm:text-base tracking-wide uppercase transition-all duration-200 shadow-lg hover:shadow-xl hover:translate-y-[-2px] active:translate-y-[1px] flex items-center justify-center gap-2.5 min-h-[48px]"
             >
               <Compass className="w-5 h-5" />
-              <span>Explorar lugares de interés</span>
+              <span>Explorar lugares</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
+            {onNavigateToRadar && (
+              <button
+                onClick={onNavigateToRadar}
+                className="px-6 py-4 rounded-sm bg-black/70 hover:bg-black border border-[var(--accent-gold)] text-[var(--accent-gold)] font-bold text-sm sm:text-base tracking-wide uppercase transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2.5 min-h-[48px]"
+              >
+                <Navigation className="w-5 h-5" />
+                <span>Mapa Radar GTA VI</span>
+              </button>
+            )}
+
             <button
               onClick={onPlanRouteClick}
-              className="px-6 py-4 rounded-sm bg-black/50 hover:bg-black/75 border border-white/30 hover:border-white text-white font-semibold text-base tracking-wide transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-3 min-h-[48px]"
+              className="px-6 py-4 rounded-sm bg-black/50 hover:bg-black/75 border border-white/30 hover:border-white text-white font-semibold text-sm sm:text-base tracking-wide transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2.5 min-h-[48px]"
             >
-              <CalendarCheck className="w-5 h-5 text-[var(--accent-gold)]" />
+              <CalendarCheck className="w-5 h-5 text-neutral-300" />
               <span>Organizar mi ruta</span>
             </button>
+          </div>
+
+          {/* Travel Profile Selector ("¿Cuál es tu plan?") */}
+          <div className="mb-10 p-4 sm:p-5 rounded-sm bg-black/60 backdrop-blur-md border border-white/15">
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--accent-gold)] flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>¿Cuál es tu plan? Personaliza tu visita</span>
+              </span>
+              {currentProfile && (
+                <button
+                  onClick={() => onSelectProfile(null)}
+                  className="text-[11px] text-neutral-400 hover:text-white underline transition-colors"
+                >
+                  Ver todos
+                </button>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {TRAVEL_PROFILES.map((prof) => {
+                const IconComponent = PROFILE_ICONS[prof.iconName] || Sparkles;
+                const isSelected = currentProfile === prof.id;
+                return (
+                  <button
+                    key={prof.id}
+                    onClick={() => onSelectProfile(isSelected ? null : prof.id)}
+                    className={`p-3 rounded-xs text-left transition-all border flex flex-col justify-between min-h-[70px] ${
+                      isSelected
+                        ? 'bg-[var(--accent-main)]/90 border-[var(--accent-gold)] text-white shadow-md'
+                        : 'bg-black/40 hover:bg-white/10 border-white/10 text-neutral-200'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between w-full mb-1">
+                      <IconComponent className={`w-4 h-4 ${isSelected ? 'text-[var(--accent-gold)]' : 'text-neutral-400'}`} />
+                      {isSelected && <Check className="w-3.5 h-3.5 text-white stroke-[3]" />}
+                    </div>
+                    <span className="font-editorial font-bold text-sm sm:text-base uppercase tracking-tight leading-tight block">
+                      {prof.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
