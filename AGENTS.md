@@ -1,0 +1,1 @@
+﻿Para cualquier tarea de diseño, maquetación o interfaz web, lee primero `DESIGN.md` para aplicar la dirección visual y activa las skills instaladas (`impeccable`, `antislop` y `design-taste-frontend`) antes de escribir código.
