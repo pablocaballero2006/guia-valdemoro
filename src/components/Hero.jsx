@@ -35,7 +35,7 @@ export default function Hero({
       {/* Background Image with Cinematic High Contrast Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="/images/valdemoro/hero-valdemoro.jpg"
+          src="./images/valdemoro/hero-valdemoro.jpg"
           alt="Vista real de la Parroquia de la Asunción y atardecer en Valdemoro"
           className="w-full h-full object-cover object-[72%_center] sm:object-center filter brightness-[0.80] contrast-[1.10]"
           width="2000"

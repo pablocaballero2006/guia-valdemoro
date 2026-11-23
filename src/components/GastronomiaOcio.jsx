@@ -64,7 +64,7 @@ export default function GastronomiaOcio() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
               <div className="lg:col-span-5 h-64 lg:h-full relative overflow-hidden">
                 <img
-                  src="/images/valdemoro/chiron.jpg"
+                  src="./images/valdemoro/chiron.jpg"
                   alt="Restaurante Chirón en Valdemoro"
                   className="w-full h-full object-cover"
                   width="800"
