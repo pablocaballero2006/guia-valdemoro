@@ -65,7 +65,8 @@ export default function MapaRadar({
 }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
-  const tileLayerRef = useRef(null);
+  const lightLayerRef = useRef(null);
+  const darkLayerRef = useRef(null);
   const markersRef = useRef({});
   const polylineGlowRef = useRef(null);
   const polylineCoreRef = useRef(null);
@@ -145,19 +146,31 @@ export default function MapaRadar({
       zoomControl: false
     });
 
-    const isCurrentlyDark = document.documentElement.classList.contains('dark');
-    const initialTileUrl = isCurrentlyDark
-      ? 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
-      : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png';
-
-    const tileLayer = L.tileLayer(initialTileUrl, {
+    // Light mode CartoDB Voyager tiles
+    const lightLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
       attribution: '© OpenStreetMap contributors, © CARTO',
       subdomains: 'abcd',
       maxNativeZoom: 19,
       maxZoom: 18
-    }).addTo(map);
+    });
 
-    tileLayerRef.current = tileLayer;
+    // Dark mode CartoDB Dark Matter tiles
+    const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+      attribution: '© OpenStreetMap contributors, © CARTO',
+      subdomains: 'abcd',
+      maxNativeZoom: 19,
+      maxZoom: 18
+    });
+
+    lightLayerRef.current = lightLayer;
+    darkLayerRef.current = darkLayer;
+
+    const isCurrentlyDark = document.documentElement.classList.contains('dark');
+    if (isCurrentlyDark) {
+      darkLayer.addTo(map);
+    } else {
+      lightLayer.addTo(map);
+    }
 
     // Zoom control at bottom right
     L.control.zoom({ position: 'bottomright' }).addTo(map);
@@ -182,22 +195,34 @@ export default function MapaRadar({
     return () => {
       map.remove();
       mapInstanceRef.current = null;
-      tileLayerRef.current = null;
+      lightLayerRef.current = null;
+      darkLayerRef.current = null;
     };
   }, []);
 
-  // Synchronize CartoDB Voyager (Light) / Dark Matter (Dark) Tile Layers dynamically via setUrl
+  // Synchronize CartoDB Voyager (Light) / Dark Matter (Dark) Tile Layers dynamically without purging tiles
   useEffect(() => {
-    if (!tileLayerRef.current) return;
+    const map = mapInstanceRef.current;
+    const lightLayer = lightLayerRef.current;
+    const darkLayer = darkLayerRef.current;
+    if (!map || !lightLayer || !darkLayer) return;
 
-    const targetUrl = effectiveDark
-      ? 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
-      : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png';
-
-    tileLayerRef.current.setUrl(targetUrl);
-    if (mapInstanceRef.current) {
-      mapInstanceRef.current.invalidateSize();
+    if (effectiveDark) {
+      if (map.hasLayer(lightLayer)) {
+        map.removeLayer(lightLayer);
+      }
+      if (!map.hasLayer(darkLayer)) {
+        map.addLayer(darkLayer);
+      }
+    } else {
+      if (map.hasLayer(darkLayer)) {
+        map.removeLayer(darkLayer);
+      }
+      if (!map.hasLayer(lightLayer)) {
+        map.addLayer(lightLayer);
+      }
     }
+    map.invalidateSize();
   }, [effectiveDark]);
 
   // 3. Render 15 Radar Blips
