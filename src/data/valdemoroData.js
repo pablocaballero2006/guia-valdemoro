@@ -110,8 +110,8 @@ export const PLACES = [
     lat: 40.18874,
     lng: -3.67913,
     mapsQuery: 'Parroquia de Nuestra Señora de la Asunción, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/iglesia-asuncion.jpg',
-    artworkImage: '/guia-valdemoro/guia-valdemoro/images/valdemoro/goya-valdemoro.jpg',
+    image: '/guia-valdemoro/images/valdemoro/iglesia-asuncion.jpg',
+    artworkImage: '/guia-valdemoro/images/valdemoro/goya-valdemoro.jpg',
     description: 'Principal templo barroco de Valdemoro; su retablo mayor conserva una obra documentada de Francisco de Goya (La aparición de la Virgen a San Julián).',
     historyDetails: [
       'Declarada Bien de Interés Cultural (BIC). Cuenta con planta de cruz latina, nave central con bóveda de cañón con lunetos y capillas laterales.',
@@ -140,8 +140,8 @@ export const PLACES = [
     lat: 40.19041,
     lng: -3.67743,
     mapsQuery: 'Plaza de la Constitución, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/plaza-constitucion.jpg',
-    secondaryImage: '/guia-valdemoro/guia-valdemoro/images/valdemoro/torre-reloj.jpg',
+    image: '/guia-valdemoro/images/valdemoro/plaza-constitucion.jpg',
+    secondaryImage: '/guia-valdemoro/images/valdemoro/torre-reloj.jpg',
     secondaryImageTitle: 'Torre del Reloj (1672)',
     secondaryImageDesc: 'Erigida sobre el edificio de El Pósito con trazas del maestro Cristóbal Rodríguez de Jarama y rematada con chapitel de pizarra.',
     description: 'Corazón histórico del municipio presidido por la Torre del Reloj (1672) y la casa consistorial.',
@@ -172,7 +172,7 @@ export const PLACES = [
     lat: 40.18815,
     lng: -3.67784,
     mapsQuery: 'Fuente de la Villa, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/fuente-de-la-villa.jpg',
+    image: '/guia-valdemoro/images/valdemoro/fuente-de-la-villa.jpg',
     description: 'Conjunto monumental de piedra de Colmenar levantado en 1605 tras el Privilegio de Feria de Felipe III, coronado por el escudo heráldico de la villa.',
     historyDetails: [
       'Construida en 1605 por acuerdo del Concejo para abastecer a los mercaderes y rebaños tras la concesión real del Privilegio de Feria otorgado por Felipe III en 1603.',
@@ -200,7 +200,7 @@ export const PLACES = [
     lat: 40.18893,
     lng: -3.67609,
     mapsQuery: 'Convento de Santa Clara, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/convento-santa-clara.jpg',
+    image: '/guia-valdemoro/images/valdemoro/convento-santa-clara.jpg',
     description: 'Fundado por el Duque de Lerma e inaugurado en 1616 con asistencia de Felipe III; joya conventual barroca declarada Bien de Interés Cultural.',
     historyDetails: [
       'Convento de la Encarnación inaugurado solemnemente el 19 de mayo de 1616 en presencia del rey Felipe III y su valido Don Francisco Gómez de Sandoval y Rojas, Duque de Lerma.',
@@ -229,7 +229,7 @@ export const PLACES = [
     lat: 40.19348,
     lng: -3.68134,
     mapsQuery: 'Ermita del Cristo de la Salud, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/ermita-cristo-salud.jpg',
+    image: '/guia-valdemoro/images/valdemoro/ermita-cristo-salud.jpg',
     description: 'Santuario que custodia al patrón de Valdemoro y epicentro de las Fiestas Patronales de mayo.',
     historyDetails: [
       'Nació en el siglo XV como humilladero junto al antiguo Camino Real a Aranjuez bajo la advocación del Cristo de la Sangre.',
@@ -257,7 +257,7 @@ export const PLACES = [
     lat: 40.19223,
     lng: -3.67660,
     mapsQuery: 'Teatro Municipal Juan Prado, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/teatro-juan-prado.jpg',
+    image: '/guia-valdemoro/images/valdemoro/teatro-juan-prado.jpg',
     description: 'Eje cultural y de artes escénicas en pleno centro histórico.',
     historyDetails: [
       'Inaugurado en 1987 y rebautizado en 2003 en memoria del ilustre pintor valdemoreño Juan Prado.',
@@ -285,8 +285,8 @@ export const PLACES = [
     lat: 40.18550,
     lng: -3.67050,
     mapsQuery: 'Espacio natural Bolitas del Airón, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/bolitas-del-airon.jpg',
-    secondaryImage: '/guia-valdemoro/guia-valdemoro/images/valdemoro/bolitas-del-airon-recreo.jpg',
+    image: '/guia-valdemoro/images/valdemoro/bolitas-del-airon.jpg',
+    secondaryImage: '/guia-valdemoro/images/valdemoro/bolitas-del-airon-recreo.jpg',
     secondaryImageTitle: 'Área Recreativa y Juegos Infantiles',
     secondaryImageDesc: 'Zona acondicionada con merenderos, columpios de madera y fuentes de agua potable bajo la sombra de arbolado consolidado.',
     description: 'Principal pulmón verde y corredor ecológico al sur de Valdemoro, ideal para paseos en familia y deporte al aire libre.',
@@ -316,7 +316,7 @@ export const PLACES = [
     lat: 40.18648,
     lng: -3.67590,
     mapsQuery: 'Parque Enrique Tierno Galván, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/parque-tierno-galvan.jpg',
+    image: '/guia-valdemoro/images/valdemoro/parque-tierno-galvan.jpg',
     description: 'Gran parque urbano en el sector noroeste con estanques, arbolado consolidado y zonas de recreo.',
     historyDetails: [
       'Segunda zona verde más amplia de la localidad con 56.000 m² estructurados en 14 parcelas delimitadas.',
@@ -344,7 +344,7 @@ export const PLACES = [
     lat: 40.19378,
     lng: -3.66825,
     mapsQuery: 'Estación de Cercanías Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/estacion-cercanias.jpg',
+    image: '/guia-valdemoro/images/valdemoro/estacion-cercanias.jpg',
     description: 'Conexión ferroviaria directa en menos de 30 minutos con Madrid (Atocha/Sol) y Aranjuez.',
     historyDetails: [
       'Inaugurada el 9 de febrero de 1851 por Isabel II formando parte de la segunda línea férrea peninsular (Madrid-Aranjuez).',
@@ -372,8 +372,8 @@ export const PLACES = [
     lat: 40.18271,
     lng: -3.68447,
     mapsQuery: 'Pabellón Municipal Jesús España, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/pabellon-jesus-espana.jpg',
-    secondaryImage: '/guia-valdemoro/guia-valdemoro/images/valdemoro/pabellon-jesus-espana-pista.jpg',
+    image: '/guia-valdemoro/images/valdemoro/pabellon-jesus-espana.jpg',
+    secondaryImage: '/guia-valdemoro/images/valdemoro/pabellon-jesus-espana-pista.jpg',
     secondaryImageTitle: 'Pista de Parqué y Grada Principal',
     secondaryImageDesc: 'Cancha oficial donde disputa sus partidos de Tercera FEB nacional el CB Villa de Valdemoro ante su afición.',
     description: 'Inaugurado en 2007 en honor al campeón de Europa valdemoreño Jesús España. Es la casa del CB Villa de Valdemoro, equipo que ascendió a Tercera FEB (4.ª división nacional del baloncesto español) tras proclamarse campeón de la Liga VIPS en 2026.',
@@ -403,7 +403,7 @@ export const PLACES = [
     lat: 40.18296,
     lng: -3.68185,
     mapsQuery: 'Glorieta del Universo, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/astronauta-reston.jpg',
+    image: '/guia-valdemoro/images/valdemoro/astronauta-reston.jpg',
     description: 'Escultura monumental de acero inoxidable de 4 metros y 2.600 kg creada por Francisco Leiro en 2001, símbolo contemporáneo de El Restón.',
     historyDetails: [
       'Encargada al prestigioso escultor gallego Francisco Leiro e instalada en 2001 en la glorieta central de acceso a la ampliación de El Restón.',
@@ -431,7 +431,7 @@ export const PLACES = [
     lat: 40.18392,
     lng: -3.67906,
     mapsQuery: 'Centro Comercial El Reston, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/cc-el-reston.jpg',
+    image: '/guia-valdemoro/images/valdemoro/cc-el-reston.jpg',
     description: 'Principal complejo comercial, de restauración y salas de cine (Restón Cinema) en la zona sur.',
     historyDetails: [
       'Inaugurado para dar servicio comercial integral al crecimiento residencial de El Restón y el sur de Valdemoro.',
@@ -459,7 +459,7 @@ export const PLACES = [
     lat: 40.18172,
     lng: -3.68178,
     mapsQuery: 'La Osa Handmade Burgers, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/la-osa-burger.jpg',
+    image: '/guia-valdemoro/images/valdemoro/la-osa-burger.jpg',
     description: 'Referente local de hamburguesas gourmet y smash burgers artesanales en Valdemoro.',
     historyDetails: [
       'Emprendimiento gastronómico local nacido en El Restón especializado en hamburguesas gourmet smash con discos de carne picada a mano y madurada.',
@@ -487,7 +487,7 @@ export const PLACES = [
     lat: 40.20018,
     lng: -3.69595,
     mapsQuery: 'Hospital Universitario Infanta Elena, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/hospital-infanta-elena.jpg',
+    image: '/guia-valdemoro/images/valdemoro/hospital-infanta-elena.jpg',
     description: 'Hospital público de referencia para Valdemoro y su área sanitaria.',
     historyDetails: [
       'Inaugurado en noviembre de 2007 como centro de atención hospitalaria y quirúrgica de alta resolución del Servicio Madrileño de Salud (SERMAS).',
@@ -515,7 +515,7 @@ export const PLACES = [
     lat: 40.18527,
     lng: -3.68811,
     mapsQuery: 'Biblioteca Municipal Ana María Matute, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/biblioteca-ana-maria-matute.jpg',
+    image: '/guia-valdemoro/images/valdemoro/biblioteca-ana-maria-matute.jpg',
     description: 'Principal centro cultural, biblioteca y sala de estudio del municipio, inaugurado en 2008.',
     historyDetails: [
       'Edificio de arquitectura contemporánea inaugurado en 2008 por la célebre escritora y académica Ana María Matute, Premio Cervantes.',
@@ -540,7 +540,7 @@ export const GASTRONOMY_EXPERIENCES = [
     lat: 40.18985,
     lng: -3.67810,
     mapsQuery: 'Restaurante Chirón, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/chiron.jpg',
+    image: '/guia-valdemoro/images/valdemoro/chiron.jpg',
     description: 'Estandarte culinario del sur madrileño. Cocina de arraigo castellano y raíces fluviales entre los ríos Jarama y Tajo reinterpretada con técnica contemporánea impecable.',
     highlights: ['Menú degustación Jarama y Tajuña', 'Bodega con vinos singulares de Madrid', 'Aceite de oliva de producción propia'],
     priceRange: '€€€€'
@@ -557,7 +557,7 @@ export const GASTRONOMY_EXPERIENCES = [
     lat: 40.18172,
     lng: -3.68178,
     mapsQuery: 'La Osa Handmade Burgers, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/la-osa-burger.jpg',
+    image: '/guia-valdemoro/images/valdemoro/la-osa-burger.jpg',
     description: 'Smash burgers gourmet con carne madurada y salsas artesanales, destacando sus creaciones bautizadas en tributo al universo Rockstar.',
     highlights: ['Burger MVP Jam GTA VI', 'Cheese Bacon GTA VI', 'Patatas rústicas caseras'],
     priceRange: '€€'
@@ -574,7 +574,7 @@ export const GASTRONOMY_EXPERIENCES = [
     lat: 40.19041,
     lng: -3.67743,
     mapsQuery: 'Plaza de la Constitución, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/tapeo-plaza.jpg',
+    image: '/guia-valdemoro/images/valdemoro/tapeo-plaza.jpg',
     description: 'El ambiente más auténtico para disfrutar de raciones castellanas al pie de los soportales del siglo XVII.',
     highlights: ['Torreznos crujientes al estilo de la comarca', 'Tortilla de patatas casera guisada', 'Callos a la madrileña y rabo de toro'],
     priceRange: '€€'
@@ -591,7 +591,7 @@ export const GASTRONOMY_EXPERIENCES = [
     lat: 40.18296,
     lng: -3.68185,
     mapsQuery: 'Avenida del Mar Mediterráneo, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/reston-gastronomia.jpg',
+    image: '/guia-valdemoro/images/valdemoro/reston-gastronomia.jpg',
     description: 'Punto de encuentro dinámico con amplias terrazas al aire libre, cocinas internacionales y hamburgueserías gourmet.',
     highlights: ['Tapas de autor creativas', 'Cervezas artesanas y coctelería', 'Ambiente familiar junto al parque Tierno Galván'],
     priceRange: '€€'
@@ -608,7 +608,7 @@ export const GASTRONOMY_EXPERIENCES = [
     lat: 40.18890,
     lng: -3.67720,
     mapsQuery: 'Calle Real, Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/reposteria-tejas.jpg',
+    image: '/guia-valdemoro/images/valdemoro/reposteria-tejas.jpg',
     description: 'El bocado dulce emblemático de Valdemoro. Las tejas de almendra tostada con fina masa de mantequilla y los esponjosos bollos de aceite castellanos horneados a diario.',
     highlights: ['Tejas crujientes con almendra marcona', 'Bollos de aceite con anís y azúcar', 'Elaboración 100% artesanal'],
     priceRange: '€'
@@ -625,7 +625,7 @@ export const GASTRONOMY_EXPERIENCES = [
     lat: 40.18870,
     lng: -3.67650,
     mapsQuery: 'Valdemoro, Madrid',
-    image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/vinos-madrid.jpg',
+    image: '/guia-valdemoro/images/valdemoro/vinos-madrid.jpg',
     description: 'Valdemoro está adscrito a la subzona más extensa de la Denominación de Origen Protegida Vinos de Madrid, donde la variedad blanca Malvar ofrece vinos frescos de notable personalidad.',
     highlights: ['Blancos frescos de uva Malvar', 'Tintos con crianza de Tempranillo', 'Aceites de oliva virgen extra de almazaras del sureste'],
     priceRange: '€€'

@@ -12,7 +12,7 @@ export default function RutasRecomendadas({ onLoadCustomPreset, onNavigateToPlan
       stopsCount: 4,
       cost: 'Acceso Gratuito',
       target: 'Ideal amantes del arte e historia',
-      image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/iglesia-asuncion.jpg',
+      image: '/guia-valdemoro/images/valdemoro/iglesia-asuncion.jpg',
       description: 'El itinerario cultural esencial: admira el óleo de Francisco de Goya en la Asunción, pasea bajo los soportales del siglo XVII y conoce la clausura del Duque de Lerma.',
       placeIds: ['iglesia-asuncion', 'plaza-constitucion', 'convento-santa-clara', 'fuente-de-la-villa']
     },
@@ -24,7 +24,7 @@ export default function RutasRecomendadas({ onLoadCustomPreset, onNavigateToPlan
       stopsCount: 3,
       cost: '100% Gratuito',
       target: 'Familias con niños y mascotas',
-      image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/bolitas-del-airon.jpg',
+      image: '/guia-valdemoro/images/valdemoro/bolitas-del-airon.jpg',
       description: 'Un recorrido pensado para desconectar: 44 hectáreas en Bolitas del Airón con arroyos y merenderos, seguido del lago con aves del parque Tierno Galván.',
       placeIds: ['bolitas-del-airon', 'parque-tierno-galvan', 'fuente-de-la-villa']
     },
@@ -36,7 +36,7 @@ export default function RutasRecomendadas({ onLoadCustomPreset, onNavigateToPlan
       stopsCount: 6,
       cost: 'Variable según gastronomía',
       target: 'La experiencia turística definitiva',
-      image: '/guia-valdemoro/guia-valdemoro/images/valdemoro/plaza-constitucion.jpg',
+      image: '/guia-valdemoro/images/valdemoro/plaza-constitucion.jpg',
       description: 'Combina patrimonio monumental, el lienzo de Goya, paseo por los parques naturales, ruta de tapas tradicionales y velada en el Teatro Juan Prado.',
       placeIds: ['iglesia-asuncion', 'plaza-constitucion', 'convento-santa-clara', 'fuente-de-la-villa', 'bolitas-del-airon', 'teatro-juan-prado']
     }

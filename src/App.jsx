@@ -241,7 +241,7 @@ export default function App() {
 
                   <div className="relative aspect-[4/3] rounded-sm overflow-hidden border border-[var(--border-main)] shadow-md">
                     <img
-                      src="/guia-valdemoro/guia-valdemoro/images/valdemoro/plaza-constitucion.jpg"
+                      src="/guia-valdemoro/images/valdemoro/plaza-constitucion.jpg"
                       alt="Fotografía real de la Plaza de la Constitución de Valdemoro"
                       className="w-full h-full object-cover"
                       width="800"
