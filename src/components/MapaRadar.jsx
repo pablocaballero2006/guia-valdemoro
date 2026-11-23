@@ -133,7 +133,7 @@ export default function MapaRadar({
 
     // Center on Valdemoro
     const map = L.map(mapContainerRef.current, {
-      center: [40.1895, -3.6740],
+      center: [40.1895, -3.6780],
       zoom: 14,
       minZoom: 13,
       maxZoom: 18,
@@ -144,6 +144,20 @@ export default function MapaRadar({
       maxBoundsViscosity: 0.9,
       zoomControl: false
     });
+
+    const isCurrentlyDark = document.documentElement.classList.contains('dark');
+    const initialTileUrl = isCurrentlyDark
+      ? 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
+      : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png';
+
+    const tileLayer = L.tileLayer(initialTileUrl, {
+      attribution: '© OpenStreetMap contributors, © CARTO',
+      subdomains: 'abcd',
+      maxNativeZoom: 19,
+      maxZoom: 18
+    }).addTo(map);
+
+    tileLayerRef.current = tileLayer;
 
     // Zoom control at bottom right
     L.control.zoom({ position: 'bottomright' }).addTo(map);
@@ -168,28 +182,22 @@ export default function MapaRadar({
     return () => {
       map.remove();
       mapInstanceRef.current = null;
+      tileLayerRef.current = null;
     };
   }, []);
 
-  // Synchronize CartoDB Voyager (Light) / Dark Matter (Dark) Tile Layers dynamically
+  // Synchronize CartoDB Voyager (Light) / Dark Matter (Dark) Tile Layers dynamically via setUrl
   useEffect(() => {
-    const map = mapInstanceRef.current;
-    if (!map) return;
+    if (!tileLayerRef.current) return;
 
-    if (tileLayerRef.current) {
-      map.removeLayer(tileLayerRef.current);
-    }
-
-    const tileUrl = effectiveDark
+    const targetUrl = effectiveDark
       ? 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
       : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png';
 
-    tileLayerRef.current = L.tileLayer(tileUrl, {
-      attribution: '© OpenStreetMap contributors, © CARTO',
-      subdomains: 'abcd',
-      maxNativeZoom: 19,
-      maxZoom: 18
-    }).addTo(map);
+    tileLayerRef.current.setUrl(targetUrl);
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.invalidateSize();
+    }
   }, [effectiveDark]);
 
   // 3. Render 15 Radar Blips
