@@ -89,30 +89,17 @@
 
 /* Map Container Styling */
 .gta-radar-map {
-  background-color: #dce4dc !important;
-  transition: background-color 0.2s ease;
+  background-color: #f1f3f5 !important;
 }
 
 html.dark .gta-radar-map,
 .gta-radar-map.map-dark {
-  background-color: #0d1117 !important;
+  background-color: #1a1a24 !important;
 }
 
 /* Fix Leaflet default plus-lighter blend mode washing out tiles against background */
 .leaflet-container img.leaflet-tile {
   mix-blend-mode: normal !important;
-}
-
-/* Light mode tiles filter: CartoDB Voyager */
-html:not(.dark) .gta-radar-map .leaflet-tile-pane,
-.gta-radar-map.map-light .leaflet-tile-pane {
-  filter: saturate(125%) contrast(108%) brightness(99%) !important;
-}
-
-/* Dark mode tiles filter: CartoDB Dark Matter */
-html.dark .gta-radar-map .leaflet-tile-pane,
-.gta-radar-map.map-dark .leaflet-tile-pane {
-  filter: contrast(115%) brightness(120%) saturate(125%) !important;
 }
 
 /* Pulse animation for radar blips */

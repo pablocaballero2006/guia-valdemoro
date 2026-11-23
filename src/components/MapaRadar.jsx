@@ -65,8 +65,6 @@ export default function MapaRadar({
 }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
-  const lightLayerRef = useRef(null);
-  const darkLayerRef = useRef(null);
   const markersRef = useRef({});
   const polylineGlowRef = useRef(null);
   const polylineCoreRef = useRef(null);
@@ -146,34 +144,12 @@ export default function MapaRadar({
       zoomControl: false
     });
 
-    const isCurrentlyDark = document.documentElement.classList.contains('dark');
-
-    // Light mode CartoDB Voyager tiles
-    const lightLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
-      attribution: '© OpenStreetMap contributors, © CARTO',
-      subdomains: 'abcd',
+    // Standard high-reliability OpenStreetMap tiles (100% free, no API key, no watermarks, full detail)
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
       maxNativeZoom: 19,
-      maxZoom: 18,
-      opacity: isCurrentlyDark ? 0 : 1
+      maxZoom: 18
     }).addTo(map);
-
-    // Dark mode CartoDB Dark Matter tiles
-    const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
-      attribution: '© OpenStreetMap contributors, © CARTO',
-      subdomains: 'abcd',
-      maxNativeZoom: 19,
-      maxZoom: 18,
-      opacity: isCurrentlyDark ? 1 : 0
-    }).addTo(map);
-
-    lightLayerRef.current = lightLayer;
-    darkLayerRef.current = darkLayer;
-
-    if (isCurrentlyDark) {
-      darkLayer.bringToFront();
-    } else {
-      lightLayer.bringToFront();
-    }
 
     // Zoom control at bottom right
     L.control.zoom({ position: 'bottomright' }).addTo(map);
@@ -198,29 +174,8 @@ export default function MapaRadar({
     return () => {
       map.remove();
       mapInstanceRef.current = null;
-      lightLayerRef.current = null;
-      darkLayerRef.current = null;
     };
   }, []);
-
-  // Synchronize CartoDB Voyager (Light) / Dark Matter (Dark) Tile Layers dynamically without purging tiles
-  useEffect(() => {
-    const map = mapInstanceRef.current;
-    const lightLayer = lightLayerRef.current;
-    const darkLayer = darkLayerRef.current;
-    if (!map || !lightLayer || !darkLayer) return;
-
-    if (effectiveDark) {
-      darkLayer.setOpacity(1);
-      lightLayer.setOpacity(0);
-      darkLayer.bringToFront();
-    } else {
-      lightLayer.setOpacity(1);
-      darkLayer.setOpacity(0);
-      lightLayer.bringToFront();
-    }
-    map.invalidateSize();
-  }, [effectiveDark]);
 
   // 3. Render 15 Radar Blips
   useEffect(() => {
