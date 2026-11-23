@@ -61,7 +61,7 @@ export default function Imprescindibles({
                   <span className="px-3 py-1 rounded-xs bg-black/75 backdrop-blur-sm text-[var(--accent-gold)] text-xs font-bold uppercase">
                     Monumento BIC
                   </span>
-                  {activeProfile?.recommendedIds.includes(heroPlace.id) && (
+                  {Boolean(activeProfile?.recommendedIds?.includes(heroPlace.id)) && (
                     <span className="px-3 py-1 rounded-xs bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm">
                       <Star className="w-3 h-3 fill-white" />
                       <span>Recomendado</span>
@@ -129,7 +129,7 @@ export default function Imprescindibles({
           <div className="lg:col-span-5 flex flex-col gap-6">
             {secondaryPlaces.map((place) => {
               const inRoute = isPlaceInRoute(place.id);
-              const isRecommended = activeProfile?.recommendedIds.includes(place.id);
+              const isRecommended = Boolean(activeProfile?.recommendedIds?.includes(place.id));
 
               return (
                 <article 

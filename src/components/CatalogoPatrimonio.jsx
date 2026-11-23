@@ -197,7 +197,7 @@ export default function CatalogoPatrimonio({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPlaces.map((place) => {
               const inRoute = isPlaceInRoute(place.id);
-              const isRecommended = activeProfile?.recommendedIds.includes(place.id);
+              const isRecommended = Boolean(activeProfile?.recommendedIds?.includes(place.id));
 
               return (
                 <article
