@@ -124,17 +124,16 @@ export default function MapaRadar({
       zoomControl: false
     });
 
-    // CartoDB Positron tiles (clean vector-like foundation)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap &copy; CARTO',
-      subdomains: 'abcd',
-      maxZoom: 19
+    // Esri Canvas World Light Gray Base (clean, fast, free, no API key required)
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '© OpenStreetMap contributors, © Esri',
+      maxZoom: 18
     }).addTo(map);
 
     // Zoom control at bottom right
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-    // 2. Add District Labels (Rockstar GTA VI style)
+    // 2. Add District Labels
     RADAR_DISTRICTS.forEach(district => {
       const labelIcon = L.divIcon({
         className: 'district-label-container',
@@ -145,7 +144,7 @@ export default function MapaRadar({
       L.marker(district.coords, { 
         icon: labelIcon, 
         interactive: false,
-        zIndexOffset: -100 
+        zIndexOffset: 1000 
       }).addTo(map);
     });
 
@@ -359,13 +358,13 @@ export default function MapaRadar({
         <div className="max-w-3xl mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xs bg-[var(--badge-bg)] text-[var(--accent-main)] text-xs font-bold uppercase tracking-wider mb-3">
             <Compass className="w-3.5 h-3.5" />
-            <span>Sistema Radar & Navegación GPS Leonida</span>
+            <span>Navegación Interactiva & Puntos de Interés</span>
           </div>
           <h2 className="font-editorial font-extrabold text-4xl sm:text-6xl text-[var(--text-main)] uppercase tracking-tight leading-none mb-4">
-            Mapa Radar de Valdemoro
+            Mapa de Valdemoro
           </h2>
           <p className="font-body text-base sm:text-lg text-[var(--text-muted)] leading-relaxed">
-            Cartografía interactiva inspirada en la interfaz de Rockstar Games con los 15 hitos reales contrastados. Traza waypoints en tiempo real y calcula distancias y tiempos de visita a pie.
+            Cartografía interactiva con los 15 hitos reales contrastados de Valdemoro. Traza waypoints en tiempo real y calcula distancias y tiempos de visita a pie.
           </p>
         </div>
 
@@ -379,7 +378,7 @@ export default function MapaRadar({
               </span>
             </div>
             <span className="text-xs text-[var(--text-muted)] hidden sm:inline">
-              Selecciona una ruta para activar su trazado GPS en el radar
+              Selecciona una ruta para activar su trazado GPS en el mapa
             </span>
           </div>
 
@@ -433,7 +432,7 @@ export default function MapaRadar({
               <div className="absolute top-3 left-3 right-3 z-[400] flex items-center justify-between pointer-events-none">
                 <div className="px-3 py-1.5 rounded-xs bg-black/85 backdrop-blur-md border border-white/20 text-white font-mono text-[11px] flex items-center gap-2 shadow-lg">
                   <Crosshair className="w-3.5 h-3.5 text-[var(--accent-main)] animate-spin-slow" />
-                  <span>RADAR // VALDEMORO SUR [40.1895°N, 3.6740°W]</span>
+                  <span>MAPA // VALDEMORO [40.1895°N, 3.6740°W]</span>
                 </div>
 
                 <div className="px-3 py-1.5 rounded-xs bg-black/85 backdrop-blur-md border border-[var(--accent-gold)]/40 text-[var(--accent-gold)] font-bold text-[11px] uppercase tracking-wider flex items-center gap-2 shadow-lg">
@@ -540,7 +539,7 @@ export default function MapaRadar({
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Buscar en el radar..."
+                  placeholder="Buscar en el mapa..."
                   className="w-full pl-9 pr-3 py-2 text-xs bg-[var(--surface-subtle)] border border-[var(--border-main)] rounded-xs text-[var(--text-main)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-main)] transition-colors"
                 />
               </div>

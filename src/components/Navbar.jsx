@@ -16,7 +16,7 @@ export default function Navbar({ currentView, setCurrentView, routePlacesCount, 
   const navItems = [
     { id: 'inicio', label: 'Inicio', icon: Compass },
     { id: 'patrimonio', label: 'Patrimonio y Lugares', icon: MapPin },
-    { id: 'mapa-radar', label: 'Mapa Radar', icon: Navigation },
+    { id: 'mapa-radar', label: 'Mapa', icon: Navigation },
     { id: 'gastronomia', label: 'Gastronomía y Ocio', icon: UtensilsCrossed },
     { 
       id: 'planificador', 

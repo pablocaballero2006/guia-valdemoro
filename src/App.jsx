@@ -224,7 +224,7 @@ export default function App() {
                         className="px-5 py-3 rounded-sm bg-black/70 hover:bg-black border border-[var(--accent-gold)] text-[var(--accent-gold)] font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-2 min-h-[44px]"
                       >
                         <Navigation className="w-4 h-4" />
-                        <span>Mapa Radar GTA VI</span>
+                        <span>Mapa</span>
                       </button>
 
                       <button

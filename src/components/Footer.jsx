@@ -54,7 +54,7 @@ export default function Footer({ onNavigate }) {
                   onClick={() => onNavigate('mapa-radar')}
                   className="hover:text-[var(--accent-main)] transition-colors py-1"
                 >
-                  Mapa Radar GTA VI
+                  Mapa
                 </button>
               </li>
               <li>

@@ -32,7 +32,7 @@ export const TRAVEL_PROFILES = [
     id: 'burgers-ocio',
     label: 'Burgers y Ocio',
     iconName: 'Flame',
-    description: 'Smash burgers GTA VI, cines, escultura vanguardista y planes modernos',
+    description: 'Smash burgers gourmet, cines, escultura vanguardista y planes modernos',
     recommendedIds: ['la-osa-burger', 'cc-el-reston', 'astronauta-reston', 'pabellon-jesus-espana']
   },
   {

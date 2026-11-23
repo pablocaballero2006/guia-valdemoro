@@ -213,10 +213,10 @@ export default function PlanificadorRuta({
                     <button
                       onClick={onNavigateToRadar}
                       className="text-xs font-bold text-[var(--accent-gold)] hover:text-white px-3 py-1.5 rounded-xs bg-black/60 border border-[var(--accent-gold)]/40 transition-colors flex items-center gap-1.5 min-h-[38px]"
-                      title="Ver ruta en el Mapa Radar"
+                      title="Ver ruta en el Mapa"
                     >
                       <Compass className="w-3.5 h-3.5" />
-                      <span>Ver en Radar</span>
+                      <span>Ver en Mapa</span>
                     </button>
                   )}
 

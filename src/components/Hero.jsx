@@ -100,7 +100,7 @@ export default function Hero({
                 className="px-6 py-4 rounded-sm bg-black/70 hover:bg-black border border-[var(--accent-gold)] text-[var(--accent-gold)] font-bold text-sm sm:text-base tracking-wide uppercase transition-all duration-200 backdrop-blur-sm flex items-center justify-center gap-2.5 min-h-[48px]"
               >
                 <Navigation className="w-5 h-5" />
-                <span>Mapa Radar GTA VI</span>
+                <span>Mapa</span>
               </button>
             )}
 

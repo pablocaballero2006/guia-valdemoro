@@ -87,19 +87,15 @@
   animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* GTA VI Leonida Radar Map Styles */
+/* Clean Map Styles & Cartographic Filters */
 .gta-radar-map {
-  background-color: #0c1017 !important;
+  background-color: #d8ded8 !important;
 }
 
-/* Dark mode tiles filter for GTA VI vector radar aesthetic */
-html.dark .gta-radar-map .leaflet-tile-pane {
-  filter: invert(100%) hue-rotate(185deg) brightness(88%) contrast(135%) saturate(85%);
-}
-
-/* Light mode tiles filter for crisp cartographic clarity */
-html:not(.dark) .gta-radar-map .leaflet-tile-pane {
-  filter: saturate(115%) contrast(108%) brightness(98%);
+/* User specified cartographic filter: sage green, matte gray, crisp white */
+.gta-radar-map .leaflet-tile-pane,
+.leaflet-tile-pane {
+  filter: sepia(22%) hue-rotate(68deg) saturate(145%) contrast(106%) brightness(96%) !important;
 }
 
 /* Pulse animation for radar blips */
@@ -113,22 +109,28 @@ html:not(.dark) .gta-radar-map .leaflet-tile-pane {
   animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* District Rockstar typography label */
+/* District label typography with high readability and zIndex priority */
 .district-label {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
   font-size: 13px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #FFFFFF;
-  text-shadow: 0 0 5px #000000, 0 1px 3px rgba(0,0,0,0.95), 0 0 10px rgba(255, 90, 54, 0.4);
+  color: #111115;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 2px 8px;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   pointer-events: none;
   white-space: nowrap;
 }
 
-html:not(.dark) .district-label {
-  color: #111115;
-  text-shadow: 0 0 4px #FFFFFF, 0 1px 2px rgba(255,255,255,0.95);
+html.dark .district-label {
+  color: #FFFFFF;
+  background: rgba(18, 18, 24, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.45);
 }
 
 /* Leaflet Popup Rockstar Dark Styling */
