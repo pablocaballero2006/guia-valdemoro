@@ -60,14 +60,35 @@ export default function MapaRadar({
   isPlaceInRoute, 
   onSelectPlace,
   onLoadCustomPreset,
-  onClearRoute
+  onClearRoute,
+  isDark
 }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
+  const tileLayerRef = useRef(null);
   const markersRef = useRef({});
   const polylineGlowRef = useRef(null);
   const polylineCoreRef = useRef(null);
   const waypointMarkersRef = useRef([]);
+
+  const [effectiveDark, setEffectiveDark] = useState(() => {
+    if (typeof isDark === 'boolean') return isDark;
+    return typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : true;
+  });
+
+  useEffect(() => {
+    if (typeof isDark === 'boolean') {
+      setEffectiveDark(isDark);
+    }
+  }, [isDark]);
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setEffectiveDark(document.documentElement.classList.contains('dark'));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
 
   const [selectedCategory, setSelectedCategory] = useState('todos');
   const [searchQuery, setSearchQuery] = useState('');
@@ -124,12 +145,6 @@ export default function MapaRadar({
       zoomControl: false
     });
 
-    // Esri Canvas World Light Gray Base (clean, fast, free, no API key required)
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-      attribution: '© OpenStreetMap contributors, © Esri',
-      maxZoom: 18
-    }).addTo(map);
-
     // Zoom control at bottom right
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
@@ -155,6 +170,27 @@ export default function MapaRadar({
       mapInstanceRef.current = null;
     };
   }, []);
+
+  // Synchronize CartoDB Voyager (Light) / Dark Matter (Dark) Tile Layers dynamically
+  useEffect(() => {
+    const map = mapInstanceRef.current;
+    if (!map) return;
+
+    if (tileLayerRef.current) {
+      map.removeLayer(tileLayerRef.current);
+    }
+
+    const tileUrl = effectiveDark
+      ? 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
+      : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png';
+
+    tileLayerRef.current = L.tileLayer(tileUrl, {
+      attribution: '© OpenStreetMap contributors, © CARTO',
+      subdomains: 'abcd',
+      maxNativeZoom: 19,
+      maxZoom: 18
+    }).addTo(map);
+  }, [effectiveDark]);
 
   // 3. Render 15 Radar Blips
   useEffect(() => {
@@ -419,13 +455,13 @@ export default function MapaRadar({
           {/* Map Viewport (8 Columns on Desktop) */}
           <div className="lg:col-span-8 flex flex-col gap-3">
             
-            {/* Map Frame with Radar HUD styling */}
-            <div className="relative rounded-sm overflow-hidden border-2 border-[var(--border-strong)] shadow-xl bg-[#0c1017]">
+            {/* Map Frame */}
+            <div className={`relative rounded-sm overflow-hidden border-2 border-[var(--border-strong)] shadow-xl transition-colors duration-200 ${effectiveDark ? 'bg-[#0d1117]' : 'bg-[#dce4dc]'}`}>
               
               {/* Map Container */}
               <div 
                 ref={mapContainerRef} 
-                className="w-full h-[520px] sm:h-[620px] gta-radar-map z-0"
+                className={`w-full h-[520px] sm:h-[620px] gta-radar-map z-0 ${effectiveDark ? 'map-dark' : 'map-light'}`}
               />
 
               {/* HUD Header Bar (GTA VI Pause Menu Aesthetic) */}

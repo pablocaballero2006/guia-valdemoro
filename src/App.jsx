@@ -281,7 +281,7 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 3: MAPA RADAR ESTILO GTA VI */}
+        {/* VIEW 3: MAPA */}
         {currentView === 'mapa-radar' && (
           <div className="animate-fade-in">
             <MapaRadar
@@ -291,6 +291,7 @@ export default function App() {
               onSelectPlace={(place) => setSelectedPlace(place)}
               onLoadCustomPreset={(places) => setRoutePlaces(places)}
               onClearRoute={handleClearRoute}
+              isDark={isDark}
             />
           </div>
         )}
