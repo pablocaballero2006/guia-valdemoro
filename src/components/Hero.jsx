@@ -36,8 +36,8 @@ export default function Hero({
       <div className="absolute inset-0 z-0">
         <img 
           src="/images/valdemoro/hero-valdemoro.jpg"
-          alt="Vista real de la Plaza Mayor y Torre del Reloj de Valdemoro"
-          className="w-full h-full object-cover object-center filter brightness-[0.75] contrast-[1.15]"
+          alt="Vista real de la Parroquia de la Asunción y atardecer en Valdemoro"
+          className="w-full h-full object-cover object-[72%_center] sm:object-center filter brightness-[0.80] contrast-[1.10]"
           width="2000"
           height="1200"
           fetchPriority="high"

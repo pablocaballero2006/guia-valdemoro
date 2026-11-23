@@ -138,7 +138,7 @@ export default function Imprescindibles({
                     isRecommended ? 'border-[var(--accent-gold)]/60' : 'border-[var(--border-main)]'
                   }`}
                 >
-                  <div className="w-full sm:w-36 h-36 shrink-0 relative overflow-hidden rounded-xs">
+                  <div className="w-full sm:w-40 aspect-[16/10] sm:aspect-square shrink-0 relative overflow-hidden rounded-xs">
                     <img 
                       src={place.image} 
                       alt={place.title}

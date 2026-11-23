@@ -191,11 +191,11 @@ export default function ModalDetalle({ place, onClose, onToggleRoute, isPlaceInR
 
           {/* Featured Artwork (Goya en Valdemoro) */}
           {place.artworkImage && (
-            <div className="border border-[var(--accent-gold)]/40 rounded-sm p-4 bg-black/40 flex flex-col sm:flex-row gap-4 items-center">
+            <div className="border border-[var(--accent-gold)]/40 rounded-sm p-4 bg-black/40 flex flex-col sm:flex-row gap-4 items-center sm:items-start">
               <img
                 src={place.artworkImage}
                 alt="Lienzo original de Francisco de Goya en Valdemoro"
-                className="w-36 h-48 object-cover rounded-xs border border-[var(--accent-gold)]/50 shrink-0"
+                className="w-full sm:w-36 h-52 sm:h-48 object-cover rounded-xs border border-[var(--accent-gold)]/50 shrink-0"
                 width="144"
                 height="192"
                 onError={(e) => { 
@@ -222,11 +222,11 @@ export default function ModalDetalle({ place, onClose, onToggleRoute, isPlaceInR
 
           {/* Secondary Landmark Photo */}
           {place.secondaryImage && (
-            <div className="border border-[var(--border-main)] rounded-sm p-4 bg-[var(--surface-subtle)] flex flex-col sm:flex-row gap-4 items-center">
+            <div className="border border-[var(--border-main)] rounded-sm p-4 bg-[var(--surface-subtle)] flex flex-col sm:flex-row gap-4 items-center sm:items-start">
               <img
                 src={place.secondaryImage}
                 alt={place.secondaryImageTitle || place.title}
-                className="w-36 h-40 object-cover rounded-xs border border-[var(--border-main)] shrink-0"
+                className="w-full sm:w-36 h-48 sm:h-40 object-cover rounded-xs border border-[var(--border-main)] shrink-0"
                 width="144"
                 height="160"
                 onError={(e) => { 
