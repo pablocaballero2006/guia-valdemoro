@@ -98,16 +98,21 @@ html.dark .gta-radar-map,
   background-color: #0d1117 !important;
 }
 
+/* Fix Leaflet default plus-lighter blend mode washing out tiles against background */
+.leaflet-container img.leaflet-tile {
+  mix-blend-mode: normal !important;
+}
+
 /* Light mode tiles filter: CartoDB Voyager */
 html:not(.dark) .gta-radar-map .leaflet-tile-pane,
 .gta-radar-map.map-light .leaflet-tile-pane {
-  filter: saturate(125%) contrast(105%) brightness(99%) !important;
+  filter: saturate(125%) contrast(108%) brightness(99%) !important;
 }
 
 /* Dark mode tiles filter: CartoDB Dark Matter */
 html.dark .gta-radar-map .leaflet-tile-pane,
 .gta-radar-map.map-dark .leaflet-tile-pane {
-  filter: contrast(118%) brightness(120%) saturate(130%) !important;
+  filter: contrast(115%) brightness(120%) saturate(125%) !important;
 }
 
 /* Pulse animation for radar blips */

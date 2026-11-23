@@ -146,30 +146,33 @@ export default function MapaRadar({
       zoomControl: false
     });
 
+    const isCurrentlyDark = document.documentElement.classList.contains('dark');
+
     // Light mode CartoDB Voyager tiles
     const lightLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
       attribution: '© OpenStreetMap contributors, © CARTO',
       subdomains: 'abcd',
       maxNativeZoom: 19,
-      maxZoom: 18
-    });
+      maxZoom: 18,
+      opacity: isCurrentlyDark ? 0 : 1
+    }).addTo(map);
 
     // Dark mode CartoDB Dark Matter tiles
     const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
       attribution: '© OpenStreetMap contributors, © CARTO',
       subdomains: 'abcd',
       maxNativeZoom: 19,
-      maxZoom: 18
-    });
+      maxZoom: 18,
+      opacity: isCurrentlyDark ? 1 : 0
+    }).addTo(map);
 
     lightLayerRef.current = lightLayer;
     darkLayerRef.current = darkLayer;
 
-    const isCurrentlyDark = document.documentElement.classList.contains('dark');
     if (isCurrentlyDark) {
-      darkLayer.addTo(map);
+      darkLayer.bringToFront();
     } else {
-      lightLayer.addTo(map);
+      lightLayer.bringToFront();
     }
 
     // Zoom control at bottom right
@@ -208,19 +211,13 @@ export default function MapaRadar({
     if (!map || !lightLayer || !darkLayer) return;
 
     if (effectiveDark) {
-      if (map.hasLayer(lightLayer)) {
-        map.removeLayer(lightLayer);
-      }
-      if (!map.hasLayer(darkLayer)) {
-        map.addLayer(darkLayer);
-      }
+      darkLayer.setOpacity(1);
+      lightLayer.setOpacity(0);
+      darkLayer.bringToFront();
     } else {
-      if (map.hasLayer(darkLayer)) {
-        map.removeLayer(darkLayer);
-      }
-      if (!map.hasLayer(lightLayer)) {
-        map.addLayer(lightLayer);
-      }
+      lightLayer.setOpacity(1);
+      darkLayer.setOpacity(0);
+      lightLayer.bringToFront();
     }
     map.invalidateSize();
   }, [effectiveDark]);
