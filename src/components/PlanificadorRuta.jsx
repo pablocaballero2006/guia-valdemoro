@@ -519,7 +519,7 @@ export default function PlanificadorRuta({
                       Autobuses Interurbanos (CRTM)
                     </span>
                     <ul className="space-y-1.5 text-xs text-[var(--text-muted)]">
-                      {PRACTICAL_INFO.transport.buses.map((bus, idx) => (
+                      {(PRACTICAL_INFO?.transport?.buses || []).map((bus, idx) => (
                         <li key={idx} className="flex items-start gap-1.5">
                           <strong className="text-[var(--text-main)] shrink-0">{bus.line}:</strong>
                           <span>{bus.route}</span>

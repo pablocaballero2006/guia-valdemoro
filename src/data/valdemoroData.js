@@ -633,6 +633,12 @@ export const GASTRONOMY_EXPERIENCES = [
 ];
 
 export const PRACTICAL_INFO = {
+  stats: [
+    { value: '15', label: 'Hitos Catalogados', detail: 'Patrimonio, arte, deporte y ocio' },
+    { value: '1786', label: 'Año Lienzo Goya', detail: 'Retablo mayor de la Asunción' },
+    { value: '44 ha', label: 'Bolitas del Airón', detail: 'Espacio natural protegido' },
+    { value: '25 min', label: 'Desde Madrid Sol', detail: 'Cercanías Renfe Línea C-3' }
+  ],
   transport: {
     renfe: {
       line: 'Línea C-3 (Cercanías Renfe)',
@@ -650,16 +656,20 @@ export const PRACTICAL_INFO = {
       distanceMadrid: 'A 27 km de la Puerta del Sol'
     },
     buses: [
-      { line: 'Línea 422', origin: 'Madrid (Intercambiador Legazpi)', desc: 'Servicio directo diurno cada 15 min' },
-      { line: 'Línea 428', origin: 'Getafe', desc: 'Conexión hospitalaria e interurbana' },
-      { line: 'Línea N401', origin: 'Madrid (Atocha)', desc: 'Servicio nocturno diario' }
+      { line: 'Línea 422', route: 'Madrid (Intercambiador Legazpi) - Valdemoro', desc: 'Servicio directo diurno cada 15 min' },
+      { line: 'Línea 428', route: 'Getafe - Valdemoro', desc: 'Conexión hospitalaria e interurbana' },
+      { line: 'Línea N401', route: 'Madrid (Atocha) - Valdemoro', desc: 'Servicio nocturno diario' }
     ]
   },
   tourismOffice: {
     name: 'Oficina Municipal de Turismo de Valdemoro',
     building: 'Edificio El Pósito (Plaza de la Constitución, 7)',
+    address: 'Plaza de la Constitución, 7, 28341 Valdemoro, Madrid',
     phone: '91 801 82 45',
-    email: 'turismo@ayto-valdemoro.org',
+    generalPhone: '91 809 98 00',
+    email: 'turismo@valdemoro.es',
+    hours: 'Lunes a viernes de 9:00 a 14:00 h',
+    weekendNote: 'Sábados, domingos y festivos de 10:00 a 14:00 h',
     schedule: 'Lunes a viernes: 9:00 a 14:00 h • Sábados y festivos: 10:00 a 14:00 h'
   }
 };

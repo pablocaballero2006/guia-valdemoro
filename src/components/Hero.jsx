@@ -160,7 +160,7 @@ export default function Hero({
 
         {/* Real Verified Destination Stats */}
         <div className="border-t border-white/15 pt-6 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 bg-black/40 backdrop-blur-md p-5 rounded-sm border">
-          {PRACTICAL_INFO.stats.map((stat, idx) => (
+          {(PRACTICAL_INFO?.stats || []).map((stat, idx) => (
             <div key={idx} className="flex flex-col">
               <span className="font-editorial font-bold text-3xl sm:text-4xl text-[var(--accent-gold)] leading-none mb-1">
                 {stat.value}
